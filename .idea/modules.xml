@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BigJoke.iml" filepath="$PROJECT_DIR$/BigJoke.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jokedisplaylib/jokedisplaylib.iml" filepath="$PROJECT_DIR$/jokedisplaylib/jokedisplaylib.iml" />
       <module fileurl="file://$PROJECT_DIR$/jokelib/jokelib.iml" filepath="$PROJECT_DIR$/jokelib/jokelib.iml" />
     </modules>
   </component>
