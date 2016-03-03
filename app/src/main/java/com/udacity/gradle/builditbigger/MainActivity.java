@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -49,32 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void tellJoke(View view){
         FetchJokeTask task = new FetchJokeTask();
-        task.execute();
-        //JokeDisplayActivity.startWithJoke(this, "nothing");
-    }
-
-    private class FetchJokeTask extends AsyncTask<Void, Void, String> {
-        private final String TAG = FetchJokeTask.class.getSimpleName();
-        @Override
-        protected String doInBackground(Void... params) {
-            JokeApi api = JokeResource.getJokeApi();
-            try {
-                JokeBean joke = api.getJoke().execute();
-                return joke.getJoke();
-            } catch (IOException ioe) {
-                Log.e(TAG, "IOException : " + ioe.toString());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String jokeString) {
-            if (jokeString != null) {
-                JokeDisplayActivity.startWithJoke(MainActivity.this, jokeString);
-            } else {
-                Toast.makeText(MainActivity.this, "Could not retrieve joke :o(", Toast.LENGTH_SHORT).show();
-            }
-        }
+        task.execute(this);
     }
 
 }
