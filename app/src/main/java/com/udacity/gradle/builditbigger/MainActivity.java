@@ -1,23 +1,18 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
-import android.os.AsyncTask;
+
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import com.gropoid.bigjoke.backend.jokeApi.JokeApi;
-import com.gropoid.bigjoke.backend.jokeApi.model.JokeBean;
-import com.gropoid.jokelibrary.JokeDisplayActivity;
-
-import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +43,15 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void tellJoke(View view){
-        FetchJokeTask task = new FetchJokeTask();
-        task.execute(this);
+    public void tellJoke(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        MainActivityFragment f = (MainActivityFragment) fm.findFragmentById(R.id.fragment);
+        if (f != null) {
+            f.tellJoke(view);
+        } else {
+            Log.e(TAG, "MainActivityFragment was not found");
+        }
     }
+
 
 }
