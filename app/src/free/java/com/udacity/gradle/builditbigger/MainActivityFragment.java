@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -12,6 +15,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.gropoid.jokelibrary.JokeDisplayActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -23,6 +29,18 @@ public class MainActivityFragment extends Fragment {
 
     InterstitialAd interstitialAd;
 
+    @Bind(R.id.instructions_text_view)
+    TextView instructionsView;
+
+    @Bind(R.id.joke_button)
+    Button jokeButton;
+
+    @Bind(R.id.adView)
+    AdView adView;
+
+    @Bind(R.id.progressSpinner)
+    ProgressBar progressIndicator;
+
     public MainActivityFragment() {
     }
 
@@ -30,6 +48,7 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, root);
         loadAds(root);
         return root;
     }
@@ -54,11 +73,13 @@ public class MainActivityFragment extends Fragment {
                 @Override
                 public void onAdClosed() {
                     requestNewInterstitial();
+                    setLoadingState(false);
                     JokeDisplayActivity.startWithJoke(getContext(), jokeString);
                 }
             });
             interstitialAd.show();
         } else {
+            setLoadingState(false);
             JokeDisplayActivity.startWithJoke(getContext(), jokeString);
         }
     }
@@ -79,9 +100,25 @@ public class MainActivityFragment extends Fragment {
                     showInterstitialAdThenJoke(jokeString);
                 } else {
                     Toast.makeText(getContext(), "Could not retrieve joke :o(", Toast.LENGTH_SHORT).show();
+                    setLoadingState(false);
                 }
             }
         };
+        setLoadingState(true);
         task.execute(getContext());
+    }
+
+    private void setLoadingState(boolean loading) {
+        if (loading) {
+            instructionsView.setVisibility(View.GONE);
+            jokeButton.setVisibility(View.GONE);
+            adView.setVisibility(View.GONE);
+            progressIndicator.setVisibility(View.VISIBLE);
+        } else {
+            instructionsView.setVisibility(View.VISIBLE);
+            jokeButton.setVisibility(View.VISIBLE);
+            adView.setVisibility(View.VISIBLE);
+            progressIndicator.setVisibility(View.GONE);
+        }
     }
 }

@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/instructions_text_view"
+        android:id="@+id/joke_button"
         android:text="@string/button_text"
         android:onClick="tellJoke"
 
@@ -32,5 +33,12 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id">
     </com.google.android.gms.ads.AdView>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/progressSpinner"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
