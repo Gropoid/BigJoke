@@ -17,3 +17,12 @@ allprojects {
         jcenter()
     }
 }
+
+task runTestsWithBackend {
+    dependsOn ":backend:appengineRun"
+    dependsOn ":app:test"
+    dependsOn ":backend:appengineStop"
+    tasks.findByPath(":app:test").mustRunAfter ":backend:appengineRun"
+    tasks.findByPath(":backend:appengineStop").mustRunAfter ":app:test"
+    mustRunAfter = [":backend:appengineStop"]
+}
